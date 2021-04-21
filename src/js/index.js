@@ -1,9 +1,10 @@
-const buttonS = document.querySelector('#sub');
-const buttonR = document.querySelector('#rand');
-const buttonRes = document.querySelector('#res');
-const tableOn = document.querySelector('#table');
-const quizIt = document.querySelector('#quiz_items');
-const mainForm = document.querySelector('#main-form');
+const buttonS = document.querySelector('#sub'),
+	buttonR = document.querySelector('#rand'),
+	buttonRes = document.querySelector('#res'),
+	tableOn = document.querySelector('#table'),
+	quizIt = document.querySelector('#quiz_items'),
+	mainForm = document.querySelector('#main-form'),
+	tableBody = document.querySelector('#tbody');
 const questTable = [
 	[2, 6, 13, 15, 20],
 	[3, 7, 10, 11, 23],
@@ -53,7 +54,7 @@ const questionArr = [
 
 	'21. Вам нравится объяснять все подробно и точно?',
 
-	'22. Вы предпочитаете приняться за работу («делать дело»), а не обсуждать её.?',
+	'22. Вы предпочитаете приняться за работу («делать дело»), а не обсуждать её?',
 
 	'23. Вам нравится делать все по-своему?',
 
@@ -74,6 +75,9 @@ buttonR.addEventListener('click', () => {
 
 buttonRes.addEventListener('click', () => {
 	submitted = true;
+
+	buttonS.className = 'button btn_new visible';
+	buttonR.className = 'button btn_new visible';
 	tableOn.className = 'table hiden';
 	quizIt.className = 'quiz__items visible';
 });
@@ -91,6 +95,8 @@ buttonS.addEventListener('click', () => {
 				}
 			}
 		}
+		buttonS.className = 'button btn_new hiden';
+		buttonR.className = 'button btn_new hiden';
 		tableOn.className = 'table visible';
 		quizIt.className = 'quiz__items hiden';
 		tableEnterScore(arrScore);
@@ -101,6 +107,16 @@ buttonS.addEventListener('click', () => {
 });
 
 function createTeble() {
+	for (let i = 4; i >= 0; i--) {
+		const html = `
+		<tr>
+			<td id="tdLogo${i}"></td>
+			<td id="tdScore${i}" class="tdScore"></td>
+		</tr>			
+		`;
+		tableBody.insertAdjacentHTML('afterbegin', html);
+	}
+
 	const arrDr = [
 		'Будь совершенным',
 		'Радуй других',
@@ -145,9 +161,12 @@ function createQuestion() {
 	<legend class="quiz__question">
 		${questionArr[i]}
 	</legend>
+	<p>
 	<input required type="radio" name="answer_${i}" value="1" />Да<br />
 	<input required type="radio" name="answer_${i}" value="0" />Нет<br />
-	<input required type="radio" name="answer_${i}" value="0.5" />До некоторой	степени<br /></fieldset>
+	<input required type="radio" name="answer_${i}" value="0.5" />До некоторой	степени<br />
+	</p>
+	</fieldset>
 	`;
 		quizIt.insertAdjacentHTML('afterbegin', html);
 	}
